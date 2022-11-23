@@ -1,0 +1,13 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: tony267
+    url: jdbc:mysql://localhost:3306/riot
+
+
+riot:
+  token: RGAPI-e6e706e6-abf6-4386-a4ef-64940e39b98d
