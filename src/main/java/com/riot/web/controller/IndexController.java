@@ -1,6 +1,5 @@
 package com.riot.web.controller;
 
-
 import com.riot.web.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +21,7 @@ public class IndexController {
         SessionUser user = (SessionUser) session.getAttribute("user");
 
         return user.toString();
+
 
     }
 }
