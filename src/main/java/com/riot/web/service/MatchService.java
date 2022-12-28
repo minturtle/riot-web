@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,9 +22,7 @@ public class MatchService {
     private final RiotAPIConnection api;
 
     public List<MatchPreviewDto> findMatchesBySummonerName(String name) throws IOException {
-
-        Summoner findSummoner = api.getSummonerByName(name);
-        return null;
+        return api.getMatchesBySummonerName(name, 0, 1).stream().map(match -> new MatchPreviewDto(match)).collect(Collectors.toList());
     }
 
 }

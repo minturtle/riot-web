@@ -1,6 +1,9 @@
 server:
   port: 8080
 
+riot:
+  token: RGAPI-4b091aa4-79cd-424a-bfd0-654c962ff3df
+
 spring:
   security:
     oauth2:
@@ -19,12 +22,9 @@ spring:
             token_uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user_name_attribute: id
-  #datasource:
-  #  driver-class-name: com.mysql.cj.jdbc.Driver
-  #  username: root
-  #  password: tony267
-  #  url: jdbc:mysql://localhost:3306/riot
-
-riot:
-  token: RGAPI-e6e706e6-abf6-4386-a4ef-64940e39b98d
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: root
+    password: 1111
+    url: jdbc:h2:tcp://localhost/~/testDB
 
