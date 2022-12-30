@@ -27,4 +27,7 @@ spring:
     username: root
     password: 1111
     url: jdbc:h2:tcp://localhost/~/testDB
+  jpa:
+    hibernate:
+      ddl-auto: create
 

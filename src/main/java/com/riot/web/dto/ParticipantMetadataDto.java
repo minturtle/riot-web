@@ -1,6 +1,7 @@
 package com.riot.web.dto;
 
 import com.entity.match.Participant;
+import com.riot.db.entity.ParticipantEntity;
 import lombok.Data;
 
 @Data
@@ -15,7 +16,7 @@ public class ParticipantMetadataDto {
     private String sumonnerName;
     private String role;
 
-    public ParticipantMetadataDto(Participant p) {
+    public ParticipantMetadataDto(ParticipantEntity p) {
         this.kill = p.getKills();
         this.death = p.getDeaths();
         this.assist = p.getAssists();

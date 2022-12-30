@@ -1,6 +1,7 @@
 package com.riot.web.dto;
 
 import com.entity.match.Team;
+import com.riot.db.entity.TeamEntity;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -11,11 +12,9 @@ public class TeamPreviewDto{
     private List<ParticipantMetadataDto> participants = new ArrayList<>();
     private boolean win;
 
-    public TeamPreviewDto(Team team) {
-        this.win = team.getWin();
+    public TeamPreviewDto(TeamEntity team) {
+        team.getParticipants().forEach(p->participants.add(new ParticipantMetadataDto(p)));
+        this.win = team.isWin();
     }
 
-    public void addParticipantAtTeam(ParticipantMetadataDto participant){
-        participants.add(participant);
-    }
 }

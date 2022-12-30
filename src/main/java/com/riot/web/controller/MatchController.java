@@ -23,7 +23,7 @@ public class MatchController{
 
     @GetMapping("/summoner/name/{name}")
     public ResponseEntity<List<MatchPreviewDto>> getMatchByName(@PathVariable String name) throws IOException {
-        final List<MatchPreviewDto> findMatches = matchService.findMatchesBySummonerName(name);
+        final List<MatchPreviewDto> findMatches = matchService.findMatchesInDatabaseBySummonerName(name, 0, 1);
         return new ResponseEntity<>(findMatches, HttpStatus.OK);
     }
 
