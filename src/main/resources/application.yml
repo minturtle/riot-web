@@ -2,9 +2,12 @@ server:
   port: 8080
 
 riot:
-  token: RGAPI-4b091aa4-79cd-424a-bfd0-654c962ff3df
+  token: RGAPI-515f44d4-38a9-470c-b33a-d49e001ca7b3
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   security:
     oauth2:
       client:

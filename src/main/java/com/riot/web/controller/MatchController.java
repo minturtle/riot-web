@@ -6,10 +6,7 @@ import com.riot.web.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +18,14 @@ public class MatchController{
 
     private final MatchService matchService;
 
-    @GetMapping("/summoner/name/{name}")
-    public ResponseEntity<List<MatchPreviewDto>> getMatchByName(@PathVariable String name) throws IOException {
-        final List<MatchPreviewDto> findMatches = matchService.findMatchesInDatabaseBySummonerName(name, 0, 1);
+    @GetMapping("/summoner/name")
+    public ResponseEntity<List<MatchPreviewDto>> getMatchByNameFromDB(@RequestParam String name) throws IOException {
+        final List<MatchPreviewDto> findMatches = matchService.findMatchesInDatabaseBySummonerName(name, 0, 10);
+        return new ResponseEntity<>(findMatches, HttpStatus.OK);
+    }
+    @GetMapping("/summoner/name/refresh")
+    public ResponseEntity<List<MatchPreviewDto>> getMatchByNameFromApi(@RequestParam String name) throws IOException {
+        final List<MatchPreviewDto> findMatches = matchService.findMatchesFromApi(name, 0, 10);
         return new ResponseEntity<>(findMatches, HttpStatus.OK);
     }
 

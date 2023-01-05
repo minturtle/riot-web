@@ -61,12 +61,18 @@ class MatchServiceTest {
     @DisplayName("match api 조회-api calltime이 없는 경우")
     void t2() throws Exception {
         //given
+        Match m1 = new Match(new MetaData(), new Info());
+        Match m2 = new Match(new MetaData(), new Info());
+        Match m3 = new Match(new MetaData(), new Info());
+
+        m1.getInfo().setTeams(List.of());
+        m2.getInfo().setTeams(List.of());
+        m3.getInfo().setTeams(List.of());
+
         given(summonerService.getSummoner(fakeSummonerName)).willReturn(fakeSummonerEntity);
 
         given(api.getMatchesBySummonerName(fakeSummonerName, 0, 10, 0L)).willReturn(
-                List.of(new Match(new MetaData(), new Info()),
-                        new Match(new MetaData(), new Info()),
-                        new Match(new MetaData(), new Info())));
+                List.of(m1,m2,m3));
 
         //when
         List<MatchPreviewDto> matches = matchService.findMatchesFromApi(fakeSummonerName, 0, 10);

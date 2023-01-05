@@ -19,7 +19,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
-
+        if(user == null) return "손님";
         return user.toString();
 
 
