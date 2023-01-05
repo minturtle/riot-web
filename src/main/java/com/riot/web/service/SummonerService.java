@@ -19,7 +19,7 @@ public class SummonerService {
 
 
     /* Summoner을 DB에서 조회해 DB에 없으면 API로 찾아서 DB에 저장
-    service 클래스들만 사용할 수 있도록 제한 
+    service 클래스들만 사용할 수 있도록 제한
      */
     protected SummonerEntity getSummoner(String name) throws IOException {
         Optional<SummonerEntity> optionalSummoner = summonerRepository.findSummonerEntityByName(name);
@@ -34,5 +34,25 @@ public class SummonerService {
         }
 
         return summonerEntity;
+    }
+
+
+    public void updateSummoner(String name) throws IOException {
+        final SummonerEntity summonerEntity = getSummoner(name);
+        final Summoner apiSummoner = api.getSummonerByName(name);
+
+        summonerEntity.setLevel(apiSummoner.getSummonerLevel());
+        summonerEntity.setAccountId(apiSummoner.getAccountId());
+        summonerEntity.setEid(apiSummoner.getId());
+        summonerEntity.setProfileIconId(apiSummoner.getProfileIconId());
+        summonerEntity.setPuuid(apiSummoner.getPuuid());
+        summonerEntity.setRevisionDate(apiSummoner.getRevisionDate());
+
+    }
+
+    public void setSummonerApiCallTime(String name) throws IOException {
+        final SummonerEntity summonerEntity = getSummoner(name);
+
+        summonerEntity.setLastApiCallTime(System.currentTimeMillis());
     }
 }

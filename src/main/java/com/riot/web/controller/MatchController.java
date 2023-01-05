@@ -3,6 +3,7 @@ package com.riot.web.controller;
 
 import com.riot.web.dto.MatchPreviewDto;
 import com.riot.web.service.MatchService;
+import com.riot.web.service.SummonerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MatchController{
 
     private final MatchService matchService;
-
+    private final SummonerService summonerService;
     @GetMapping("/summoner/name")
     public ResponseEntity<List<MatchPreviewDto>> getMatchByNameFromDB(@RequestParam String name) throws IOException {
         final List<MatchPreviewDto> findMatches = matchService.findMatchesInDatabaseBySummonerName(name, 0, 10);
@@ -25,6 +26,8 @@ public class MatchController{
     }
     @GetMapping("/summoner/name/refresh")
     public ResponseEntity<List<MatchPreviewDto>> getMatchByNameFromApi(@RequestParam String name) throws IOException {
+        summonerService.setSummonerApiCallTime(name);
+
         final List<MatchPreviewDto> findMatches = matchService.findMatchesFromApi(name, 0, 10);
         return new ResponseEntity<>(findMatches, HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import com.RiotAPIConnection;
 import com.entity.Summoner;
 import com.riot.db.entity.SummonerEntity;
 import com.riot.web.db.WebSummonerRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,14 @@ class SummonerServiceTest {
 
     private final String summonerName = "hide on bush";
     private final String puid = "hE85rBOC6XPL4fIpNbM6ERduuAoHEvjvf9CZGVWf4yNB85zen1rXPH8gL3KuinKsuJoECCz2uzHy_w";
-    private final Summoner fakeSummoner = new Summoner("accountId", 1, 11L, summonerName, "id", puid, 10L);
+    private Summoner fakeSummoner;
+    private Summoner fakeSummoner2;
+    @BeforeEach
+    void setUp() {
+        fakeSummoner = new Summoner("accountId", 1, 11L, summonerName, "id", puid, 10L);
+        fakeSummoner2 = new Summoner("accountId", 11, 12L, summonerName, "id", puid, 11L);
+
+    }
 
     @Test
     @DisplayName("객체 생성 테스트")
@@ -78,5 +86,36 @@ class SummonerServiceTest {
         SummonerEntity findSummoner = summonerService.getSummoner(summonerName);
         //then
         assertThat(findSummoner).isEqualTo(fakeSummonerEntity);
+    }
+
+    @Test
+    @DisplayName("Summoner의 정보 update")
+    void t4() throws Exception {
+        //given
+        final SummonerEntity fakeSummonerEntity = new SummonerEntity(fakeSummoner);
+
+        given(summonerRepository.findSummonerEntityByName(summonerName)).willReturn(Optional.of(fakeSummonerEntity));
+        given(api.getSummonerByName(summonerName)).willReturn(fakeSummoner2);
+        //when
+        summonerService.updateSummoner(summonerName);
+        //then
+
+        assertThat(fakeSummonerEntity.getLevel()).isEqualTo(11L);
+        assertThat(fakeSummonerEntity.getRevisionDate()).isEqualTo(12L);
+        assertThat(fakeSummonerEntity.getLevel()).isEqualTo(11L);
+    }
+
+    @Test
+    @DisplayName("apiCallTime update하기")
+    void t6() throws Exception {
+        //given
+        final SummonerEntity fakeSummonerEntity = new SummonerEntity(fakeSummoner);
+
+        given(summonerRepository.findSummonerEntityByName(summonerName)).willReturn(Optional.of(fakeSummonerEntity));
+        //when
+        summonerService.setSummonerApiCallTime(summonerName);
+
+        assertThat(fakeSummonerEntity.getLastApiCallTime()).isNotEqualTo(0L);
+        //then
     }
 }
